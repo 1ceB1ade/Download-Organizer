@@ -23,7 +23,7 @@ def organize_downloads(download_dir):
             src_file = os.path.join(download_dir, filename)
             file_ext = os.path.splitext(filename)[1].lower()
 
-            dest_folder = "Other"  # Default folder
+            dest_folder = "Other"
             for folder, extensions in file_types.items():
                 if file_ext in extensions:
                     dest_folder = folder
@@ -35,7 +35,29 @@ def organize_downloads(download_dir):
 
 if __name__ == "__main__":
     username = getpass.getuser()
-    download_dir = os.path.join("C:\\Users", username, "Downloads")
+    default_download_dir = os.path.join("C:\\Users", username, "Downloads")
+
+    print("Choose an option:")
+    print("1. Organize Default Downloads directory")
+    print("2. Organize Custom directory")
+    
+    choice = input("Enter 1 or 2: ").strip()
+
+    if choice == "1":
+        download_dir = default_download_dir
+    elif choice == "2":
+        custom_dir = input("Enter the full path to the directory you want to organize: ").strip()
+        if os.path.isdir(custom_dir):
+            download_dir = custom_dir
+        else:
+            print("Invalid directory. Exiting.")
+            input("Press Enter to exit...")
+            exit()
+    else:
+        print("Invalid choice. Exiting.")
+        input("Press Enter to exit...")
+        exit()
+
     organize_downloads(download_dir)
     
     input("Press Enter to exit...")
